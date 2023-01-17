@@ -75,6 +75,10 @@ public class PromotionCommand extends Command {
             }
 
             String code = list.get(0).toString();
+            if (Main.getPromotionConfig().exists(code)) {
+                player.sendMessage("§eThis promo code already exists.");
+                return;
+            }
             Promotion promotion = Promotion.createPromotion(code, player.getName(), (boolean) list.get(1), Math.round((float) list.get(2)));
             Main.getPromotionConfig().set(code, promotion.toString());
             Main.getPromotionConfig().save();

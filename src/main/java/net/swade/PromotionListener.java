@@ -12,6 +12,6 @@ public class PromotionListener implements Listener {
     public void onPromotionCodeUse(PromotionCodeUseEvent event) {
         Player player = event.getPlayer();
         String code = event.getCode();
-        player.sendMessage("§aSuccessfully used promo code named §"+code);
+        player.sendMessage("§aSuccessfully used promo code named §b" + code);
     }
 }
