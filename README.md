@@ -2,8 +2,18 @@
 Promotion Code plugin for nukkit
 
 1/17/2023
-Relased version v0.1
-/promo
+Released version v0.1
+
+-  /promo
+
+1/18/2023
+- [*] Released version v0.3
+
+
+-  Some improvements
+-  Now op players can use promotion code too\n
+-  Default command: /promotion
+-  Promotion create Command: /promotion create, /promotion cr
 
 
 Normal players
