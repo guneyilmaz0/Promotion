@@ -7,6 +7,7 @@ import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerFormRespondedEvent;
 import cn.nukkit.form.response.FormResponseCustom;
 import cn.nukkit.form.window.FormWindowCustom;
+import net.lldv.llamaeconomy.LlamaEconomy;
 import net.swade.event.PromotionCodeUseEvent;
 import net.swade.object.Promotion;
 
@@ -18,6 +19,9 @@ public class PromotionListener implements Listener {
         Player player = event.getPlayer();
         String code = event.getCode();
         player.sendMessage("§aSuccessfully used promo code named §b" + code);
+        Promotion promotion = Promotion.getPromotion(code);
+        LlamaEconomy.getAPI().addMoney(player, promotion.getMoney());
+
     }
 
     @EventHandler
@@ -73,10 +77,33 @@ public class PromotionListener implements Listener {
                 return;
             }
 
-            Promotion promotion = Promotion.createPromotion(code, player.getName(), response.getToggleResponse(1), Math.round(response.getSliderResponse(2)));
+            String input = response.getInputResponse(3);
+
+            if (!isDouble(input)){
+                player.sendMessage("§eThe value you enter must be a numeric value.");
+                return;
+            }
+
+            double money = Double.parseDouble(input);
+
+            if (money <= 0){
+                player.sendMessage("§eThe value you entered must be greater than 0.");
+                return;
+            }
+
+            Promotion promotion = Promotion.createPromotion(code, player.getName(), response.getToggleResponse(1), Math.round(response.getSliderResponse(2)), money);
             Main.getPromotionConfig().set(code, promotion.toString());
             Main.getPromotionConfig().save();
             player.sendMessage("§aThe promo code named §f" + code + " §ahas been successfully created.");
         }
+    }
+
+    private boolean isDouble(String input) {
+        try {
+            Double money = Double.valueOf(input);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
     }
 }

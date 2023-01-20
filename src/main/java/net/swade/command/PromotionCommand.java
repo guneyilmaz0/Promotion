@@ -34,9 +34,10 @@ public class PromotionCommand extends Command {
 
     private void createPromotionForm(Player player) {
         FormWindowCustom form = new FormWindowCustom("Promotion Code Create");
-        form.addElement(new ElementInput("§3Promotion code here:", "Example: Happy New Year"));
+        form.addElement(new ElementInput("§3Promotion code here:", "eg. Happy New Year"));
         form.addElement(new ElementToggle("§3Infinity"));
         form.addElement(new ElementSlider("§3Max use", 1, 1000, 1, 5));
+        form.addElement(new ElementInput("§3Prize money", "eg. 5000"));
         player.showFormWindow(form, "promotion-create".hashCode());
     }
 }
