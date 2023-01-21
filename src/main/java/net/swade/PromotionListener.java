@@ -17,9 +17,8 @@ public class PromotionListener implements Listener {
     @EventHandler
     public void promotionCodeUse(PromotionCodeUseEvent event) {
         Player player = event.getPlayer();
-        String code = event.getCode();
-        player.sendMessage("§aSuccessfully used promo code named §b" + code);
-        Promotion promotion = Promotion.getPromotion(code);
+        Promotion promotion = event.getPromotion();
+        player.sendMessage("§aSuccessfully used promo code named §b" + promotion.getCode());
         LlamaEconomy.getAPI().addMoney(player, promotion.getMoney());
 
     }
@@ -60,7 +59,7 @@ public class PromotionListener implements Listener {
             promotion.setPlayers(promotion.getPlayers());
             Main.getPromotionConfig().set(code, promotion.toString());
             Main.getPromotionConfig().save();
-            PromotionCodeUseEvent promotionCodeUseEvent = new PromotionCodeUseEvent(player, code);
+            PromotionCodeUseEvent promotionCodeUseEvent = new PromotionCodeUseEvent(player, promotion);
             Server.getInstance().getPluginManager().callEvent(promotionCodeUseEvent);
             return;
         }

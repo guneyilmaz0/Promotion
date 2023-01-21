@@ -1,5 +1,6 @@
 package net.swade;
 
+import cn.nukkit.Server;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Config;
 import lombok.Getter;
@@ -18,6 +19,12 @@ public class Main extends PluginBase {
 
     @Override
     public void onEnable() {
+
+        if (getServer().getPluginManager().getPlugin("LlamaEconomy") == null) {
+            getLogger().info("§eYou must download LlamaEconomy plugin.");
+            Server.getInstance().getPluginManager().disablePlugin(this);
+            return;
+        }
         saveResource("promotions.json");
         setPromotionConfig(new Config(getDataFolder().getPath() + "/promotions.json"));
         getServer().getCommandMap().register("promotion", new PromotionCommand());
